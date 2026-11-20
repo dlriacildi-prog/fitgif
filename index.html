@@ -1567,7 +1567,7 @@
     var size=$('resultSize')?$('resultSize').textContent:'';
     var q=$('qScore')?$('qScore').textContent:'—';
     say('Done! Your GIF is ' + size + ' — under your limit, whole clip kept, quality kept ' + q + '.');
-    if(dest==='save'){ downloadNow(); say('Saved to your Downloads folder.'); }
+    if(dest==='save'){ var ok=downloadNow(); say(ok?'Your GIF is downloading — it saves to your Downloads folder. If it does not appear, tap Save GIF on the bar at the bottom.':'Tap Save GIF on the bar at the bottom to save it to Downloads.'); }
     else if(dest==='photos'){ var pb=$('photosBarBtn'); if(pb && !pb.disabled){ pb.click(); say('Save to Photos screen is open — the backup copy is already in Downloads.'); } else { var p=$('photosBtn'); if(p) p.click(); } }
     else if(dest==='x'){ shareTo('X'); }
     else if(dest==='instagram'){ shareTo('Instagram'); }
