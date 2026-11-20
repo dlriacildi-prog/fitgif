@@ -1538,15 +1538,15 @@
 
   function resultReady(){
     var d=$('downloadBtn');
-    return d && d.getAttribute('href') && $('result').classList.contains('show');
+    return d && d.href && d.href.indexOf('blob:')===0 && $('result').classList.contains('show');
   }
   function downloadNow(){
-    var d=$('downloadBtn'); if(d && d.getAttribute('href')){ d.click(); return true; }
-    var s=$('saveBtn'); if(s && s.getAttribute('href')){ s.click(); return true; }
+    var d=$('downloadBtn'); if(d && d.href && d.href.indexOf('blob:')===0){ d.click(); return true; }
+    var s=$('saveBtn'); if(s && s.href && s.href.indexOf('blob:')===0){ s.click(); return true; }
     return false;
   }
   async function shareTo(dest){
-    var url=$('downloadBtn').getAttribute('href');
+    var url=$('downloadBtn').href;
     try{
       var blob=await (await fetch(url)).blob();
       var file=new File([blob],'fitgif.gif',{type:'image/gif'});
