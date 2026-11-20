@@ -1,0 +1,24 @@
+{
+  "name": "FitGif",
+  "short_name": "FitGif",
+  "description": "Turn any video into the perfect GIF, sized for the app you post to. Never trimmed.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#101408",
+  "theme_color": "#b6f09c",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}
