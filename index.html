@@ -270,10 +270,11 @@
   .filmstrip-label b{color:var(--text)}
   @media(max-width:520px){.film-frame span{display:none}.film-frame:nth-child(even) span{display:block}}
   /* ---------- Pinned save bar (always findable in the dashboard) ---------- */
-  .save-bar{position:sticky;bottom:12px;z-index:20;display:flex;gap:12px;align-items:center;justify-content:space-between;background:var(--text);color:var(--bg);border-radius:16px;padding:14px 16px;margin-top:16px;box-shadow:0 12px 30px rgba(0,0,0,.28)}
-  .save-bar-text{min-width:0}.save-bar-text b{display:block;font-size:16px}
-  .save-bar-text span{font-size:13px;opacity:.85;line-height:1.4;display:block}
-  .save-bar .save-bar-btn{width:auto;flex:none;white-space:nowrap;text-decoration:none}
+  .save-bar{position:sticky;bottom:8px;z-index:20;display:flex;gap:8px;align-items:center;justify-content:space-between;background:var(--text);color:var(--bg);border-radius:14px;padding:8px 10px;margin-top:12px;box-shadow:0 8px 20px rgba(0,0,0,.25)}
+  .save-bar-text{min-width:0;flex:1 1 auto;overflow:hidden}.save-bar-text b{display:block;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .save-bar-text span{font-size:12px;opacity:.85;line-height:1.35;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .save-bar .save-bar-btn{width:auto;flex:none;white-space:nowrap;text-decoration:none;padding:8px 11px;font-size:13.5px;min-height:38px}
+  .save-bar #saveBtn{padding:9px 15px;font-size:14.5px;font-weight:800}
   .save-bar-btn.is-disabled{opacity:.45}
   .save-bar-btns{display:flex;gap:8px;flex:none;flex-wrap:wrap}
   .save-bar .btn-photos{background:transparent;border:1.5px solid var(--bg);color:var(--bg);white-space:nowrap}
@@ -291,7 +292,7 @@
   @media (prefers-color-scheme: light){.save-progress-track{background:rgba(0,0,0,.22)}}
   .save-progress-track i{display:block;height:100%;width:0%;background:var(--lime);border-radius:999px;transition:width .25s ease}
   .save-progress.is-done .save-progress-track i{background:var(--lime)}
-  @media(max-width:520px){.save-bar{flex-direction:column;align-items:stretch}.save-bar .save-bar-btn{width:100%}.save-bar-btns{flex-direction:column}.save-bar-btns .btn{width:100%}.save-progress{order:0}}
+  @media(max-width:520px){.save-bar{flex-direction:row;align-items:center;flex-wrap:wrap}.save-bar-text span{display:none}.save-bar-btns{flex-wrap:nowrap}}
   /* ---------- Save-to-Photos fallback overlay ---------- */
   .photos-overlay{display:none;position:fixed;inset:0;z-index:60;background:rgba(10,12,5,.92);padding:20px;overflow:auto}
   .photos-overlay.show{display:flex;align-items:center;justify-content:center}
@@ -683,7 +684,7 @@
         <div class="save-progress-head"><span id="saveProgLabel">Creating your GIF…</span><span class="save-progress-pct" id="saveProgPct">0%</span></div>
         <div class="save-progress-track"><i id="saveProgFill"></i></div>
       </div>
-      <div class="save-bar-text"><b>💾 Save your GIF</b><span id="saveBarText">No GIF yet — tap Create above, and Save lights up here. This bar stays pinned at the bottom of the dashboard so you can always find it.</span></div>
+      <div class="save-bar-text"><b>💾 Save your GIF</b><span id="saveBarText">No GIF yet — tap Create above.</span></div>
       <div class="save-bar-btns">
         <button type="button" class="btn btn-photos save-bar-btn" id="photosBarBtn" disabled>📸 Save to Photos</button>
         <a class="btn btn-lime save-bar-btn is-disabled" id="saveBtn" aria-disabled="true">⬇ Save GIF</a>
@@ -926,7 +927,7 @@
     var b=$('saveBtn');
     if(b&&resultURL){b.href=resultURL;b.setAttribute('download',downloadBtn.getAttribute('download')||'fitgif.gif');b.classList.remove('is-disabled');b.setAttribute('aria-disabled','false')}
     var pb=$('photosBarBtn'); if(pb)pb.disabled=!resultURL;
-    var t=$('saveBarText'); if(t)t.textContent='Ready — '+sizeTxt+'. Tap Save GIF for your Downloads folder, or Save to Photos for the save screen — it backs up to Downloads, then press-and-hold puts it in your photo library. This bar stays pinned here until you make another GIF.';
+    var t=$('saveBarText'); if(t)t.textContent='Ready — '+sizeTxt+'. Tap Save GIF or Save to Photos.';
     var grb=$('landingGifReady'); if(grb)grb.style.display=resultBlob?'flex':'none';
     /* Leave the creation progress on the floating bar at 100% so the
        finish is visible right where Save is. */
