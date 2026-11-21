@@ -897,11 +897,13 @@
      manageable and has a chance to fit — quality drops, time doesn't. */
   function effectiveBaseFps(){
     var f=parseInt(fpsSel.value)||20, len=clipLen();
-    if(len>240)f=Math.min(f,5); else if(len>120)f=Math.min(f,6); else if(len>60)f=Math.min(f,8); else if(len>45)f=Math.min(f,10); else if(len>30)f=Math.min(f,12); else if(len>15)f=Math.min(f,12);
-    /* Hard cap on captured frames. Frames are stored as compressed
-       JPEG strings (not bitmaps), so a higher cap is safe: 600 lets
-       a 60s clip run at 10 fps and a 30s clip at 12 fps instead of
-       crushing long clips to 3 fps and throwing most frames away. */
+    if(len>=30)f=Math.min(f,5); else if(len>15)f=Math.min(f,12);
+    /* Frame budget (big D's rule, 22 Nov 2026): about 5 frames per
+       second of clip once a clip reaches 30s — 150 frames at 30s,
+       300 at 60s, 600 at 2 minutes. 600 stays the hard cap on
+       captured frames, so longer clips step the rate down rather
+       than ever shortening the clip. Shorter clips keep the
+       higher rates above. */
     var maxFrames=600;
     if(len*f>maxFrames)f=Math.max(4,Math.floor(maxFrames/len));
     return Math.max(3,f);
