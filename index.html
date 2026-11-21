@@ -1292,20 +1292,48 @@
     var totalJpegBytes=0;
     for(var k=0;k<frameURLs.length;k++){var comma=frameURLs[k].indexOf(',');var b64Len=(comma>=0?frameURLs[k].length-comma-1:frameURLs[k].length);totalJpegBytes+=Math.round(b64Len*3/4)}
     var avgJpegBytes=frameURLs.length?totalJpegBytes/frameURLs.length:0;
+    /* Load the captured frames back in parallel batches — the old
+       loop awaited one image at a time, so hundreds of frames decoded
+       strictly one after another. Batches of 32 decode concurrently;
+       frame order is preserved exactly. */
     var images=[];
-    for(var j=0;j<frameURLs.length;j++){images.push(await loadFrameImage(frameURLs[j]))}
+    for(var j=0;j<frameURLs.length;j+=32){
+      var batch=await Promise.all(frameURLs.slice(j,j+32).map(loadFrameImage));
+      for(var b=0;b<batch.length;b++)images.push(batch[b]);
+    }
     return {images:images,width:mw,height:mh,fps:mfps,len:len,count:count,avgJpegBytes:avgJpegBytes};
   }
-  async function deriveFrames(master,cfg){
+  async function deriveFrames(master,cfg,cache){
     var stride=master.fps/cfg.fps;
     var wanted=Math.max(2,Math.floor(master.count*cfg.lenScale));
     var th=Math.max(2,Math.round(cfg.w*master.height/master.width/2)*2);
-    var out=document.createElement('canvas');out.width=cfg.w;out.height=th;var ctx=out.getContext('2d');
+    /* Speed: frames are handed to gifshot as canvas elements, not PNG
+       strings. gifshot accepts image elements directly and draws them
+       itself, so the old per-frame toDataURL('image/png') — a full PNG
+       encode of every frame on every ladder step, which gifshot then
+       had to decode straight back into an image — is gone entirely.
+       One canvas per frame: gifshot processes frames asynchronously,
+       so they can't share a single reused canvas. The pixels drawn are
+       identical (same source, same size), so output is unchanged. */
+    /* Per-run cache keyed by output size: the ladder tries several
+       frame rates at the same width, and those steps differ only in
+       WHICH master frames they take, not in the resizing. The full
+       resized set for a width is built once per run, then subsetted
+       for free on later steps at that width, instead of re-deriving
+       every frame on every step. */
+    var key=cfg.w+'x'+th, full=cache?cache[key]:null;
+    if(!full){
+      full=[];
+      for(var i=0;i<master.images.length;i++){
+        var cv=document.createElement('canvas');cv.width=cfg.w;cv.height=th;
+        cv.getContext('2d').drawImage(master.images[i],0,0,cfg.w,th);
+        full.push(cv);
+      }
+      if(cache)cache[key]=full;
+    }
     var frames=[];
-    for(var idx=0, taken=0; idx<master.images.length && taken<wanted; idx+=stride, taken++){
-      var src=master.images[Math.floor(idx)];
-      ctx.clearRect(0,0,cfg.w,th);ctx.drawImage(src,0,0,cfg.w,th);
-      frames.push(out.toDataURL('image/png'));
+    for(var idx=0, taken=0; idx<full.length && taken<wanted; idx+=stride, taken++){
+      frames.push(full[Math.floor(idx)]);
     }
     return {frames:frames,width:cfg.w,height:th,count:frames.length};
   }
@@ -1319,7 +1347,7 @@
          smaller step instead of dying with the whole run. */
       var done=false;
       var timer=setTimeout(function(){if(done)return;done=true;reject(new Error('Encode timed out — the GIF library stopped responding on that step'))},60000);
-      gifshot.createGIF({images:frames,gifWidth:w,gifHeight:h,interval:1/fps,numWorkers:2,sampleInterval:sample,progressCallback:function(p){},text:''},function(obj){
+      gifshot.createGIF({images:frames,gifWidth:w,gifHeight:h,interval:1/fps,numWorkers:Math.min(4,navigator.hardwareConcurrency||2),sampleInterval:sample,progressCallback:function(p){},text:''},function(obj){
         if(done)return;done=true;clearTimeout(timer);
         if(obj.error){reject(new Error(obj.errorMsg||'Encoding failed'));return}
         var parts=obj.image.split(','),bstr=atob(parts[1]),n=bstr.length,u8=new Uint8Array(n);
@@ -1414,7 +1442,7 @@
          predicted is visible next to the result. */
       try{estimate.innerHTML=estimate.innerHTML.replace(/<div class="estimator">[\s\S]*?<\/div>\s*$/,'')+estimatorHTML(ladder,pick,clipLen(),true)}catch(e){}
       setStatus('Estimator: starting at step '+(startIdx+1)+' of '+ladder.length+' (~'+fmtMB(pick.estBytes)+' predicted) — then stepping up or down from there.');
-      var best=null,failedSteps=0,triedCount=0,visited={},direction=0,currentIdx=startIdx,lastTriedSize=null;
+      var best=null,failedSteps=0,triedCount=0,visited={},direction=0,currentIdx=startIdx,lastTriedSize=null,deriveCache={};
       /* direction: 0 = first try, -1 = stepping up to better quality, +1 = stepping down to lighter */
       while(currentIdx>=0 && currentIdx<ladder.length && !visited[currentIdx]){
         if(cancelled)throw new Error('Cancelled by you — no GIF was kept.');
@@ -1424,7 +1452,7 @@
         setProgress(0.25+Math.min(0.7, triedCount*0.12));
         var derived=null,blob=null;
         try{
-          derived=await deriveFrames(master,cfg);
+          derived=await deriveFrames(master,cfg,deriveCache);
           blob=await encode(derived.frames,derived.width,derived.height,cfg.fps,cfg.sample);
         }catch(stepErr){
           if(cancelled)throw stepErr;
