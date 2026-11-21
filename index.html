@@ -1265,7 +1265,37 @@
   }
   function waitReady(){return new Promise(function(r){if(video.readyState>=2)r();else video.addEventListener('canplay',function h(){video.removeEventListener('canplay',h);r()})})}
 
-  function loadFrameImage(src){return new Promise(function(res,rej){var im=new Image();im.onload=function(){res(im)};im.onerror=function(){rej(new Error('A captured frame could not be read back'))};im.src=src})}
+  /* Captured frames are stored as JPEG Blobs, not base64 data URLs.
+     canvas.toBlob encodes asynchronously in most browsers and skips
+     the base64 pass entirely — a data URL is ~33% larger than the
+     same JPEG, and the old code then had to decode every frame back
+     out of a string. Decoding back uses createImageBitmap where
+     available (off-main-thread decode, and drawImage accepts the
+     result directly), with an Image + object URL fallback for
+     browsers without it. */
+  function canvasToJpegBlob(cv){
+    return new Promise(function(res,rej){
+      if(cv.toBlob){
+        cv.toBlob(function(b){if(b)res(b);else rej(new Error('A captured frame could not be encoded'))},'image/jpeg',0.92);
+      }else{
+        /* Ancient-browser fallback: data URL decoded back to a Blob. */
+        try{
+          var parts=cv.toDataURL('image/jpeg',0.92).split(','),bstr=atob(parts[1]),n=bstr.length,u8=new Uint8Array(n);
+          while(n--){u8[n]=bstr.charCodeAt(n)}
+          res(new Blob([u8],{type:'image/jpeg'}));
+        }catch(e){rej(e)}
+      }
+    })
+  }
+  function loadFrameBitmap(blob){
+    if(typeof createImageBitmap==='function')return createImageBitmap(blob);
+    return new Promise(function(res,rej){
+      var u=URL.createObjectURL(blob),im=new Image();
+      im.onload=function(){URL.revokeObjectURL(u);res(im)};
+      im.onerror=function(){URL.revokeObjectURL(u);rej(new Error('A captured frame could not be read back'))};
+      im.src=u;
+    })
+  }
   async function captureMaster(){
     var start=clipStart,end=clipEnd,len=end-start;
     var mw=maxWidth(),mfps=effectiveBaseFps();
@@ -1274,31 +1304,33 @@
     if(len>45)mw=Math.min(mw,360); else if(len>20)mw=Math.min(mw,480);
     var mh=Math.max(2,Math.round(mw*video.videoHeight/video.videoWidth/2)*2);
     var count=Math.max(2,Math.floor(len*mfps));
-    /* ONE reused canvas, frames stored as compressed JPEG strings.
+    /* ONE reused canvas, frames stored as compressed JPEG Blobs.
        The old code kept every frame as a full-size canvas — hundreds
        of bitmaps in RAM (~200MB+ on a 60s clip) — which is what made
        phones kill/restart the page mid-job, losing the GIF before
        any save/download button was ever shown. */
-    var frameURLs=[];video.pause();
+    var frameBlobs=[];video.pause();
     var c=document.createElement('canvas');c.width=mw;c.height=mh;var ctx=c.getContext('2d');
     for(var i=0;i<count;i++){
       if(cancelled)throw new Error('Cancelled');
       var t=start+(i/mfps);if(t>end)t=end;
       await seekTo(t);
       ctx.drawImage(video,0,0,mw,mh);
-      frameURLs.push(c.toDataURL('image/jpeg',0.92));
+      frameBlobs.push(await canvasToJpegBlob(c));
       setProgress((i/count)*0.25);setStatus('Capturing at maximum quality… frame '+(i+1)+' / '+count);
     }
+    /* Blob sizes are the exact JPEG byte counts — the old code had to
+       estimate them back out of the base64 string lengths. */
     var totalJpegBytes=0;
-    for(var k=0;k<frameURLs.length;k++){var comma=frameURLs[k].indexOf(',');var b64Len=(comma>=0?frameURLs[k].length-comma-1:frameURLs[k].length);totalJpegBytes+=Math.round(b64Len*3/4)}
-    var avgJpegBytes=frameURLs.length?totalJpegBytes/frameURLs.length:0;
+    for(var k=0;k<frameBlobs.length;k++)totalJpegBytes+=frameBlobs[k].size;
+    var avgJpegBytes=frameBlobs.length?totalJpegBytes/frameBlobs.length:0;
     /* Load the captured frames back in parallel batches — the old
        loop awaited one image at a time, so hundreds of frames decoded
        strictly one after another. Batches of 32 decode concurrently;
        frame order is preserved exactly. */
     var images=[];
-    for(var j=0;j<frameURLs.length;j+=32){
-      var batch=await Promise.all(frameURLs.slice(j,j+32).map(loadFrameImage));
+    for(var j=0;j<frameBlobs.length;j+=32){
+      var batch=await Promise.all(frameBlobs.slice(j,j+32).map(loadFrameBitmap));
       for(var b=0;b<batch.length;b++)images.push(batch[b]);
     }
     return {images:images,width:mw,height:mh,fps:mfps,len:len,count:count,avgJpegBytes:avgJpegBytes};
@@ -1490,6 +1522,12 @@
           log('Step '+(i+1)+': '+cfg.w+'px • '+cfg.fps+'fps • '+colourLabel(cfg.sample)+' → '+fmtMB(blob.size)+' ('+pct+'% of budget) ✓ FITS'+(estForThis?' — estimator predicted ~'+fmtMB(estForThis):'')+(direction===1?' — first fit stepping down, this is the best below the starting point':''));
           best={blob:blob,cfg:cfg,derived:derived,score:score,attempt:i+1,stepIndex:i,tries:triedCount,startIdx:startIdx,estBytes:pick.estBytes};
           if(direction===1){break} /* came down from over — first fit down is the winner, higher steps were over */
+          /* Already using ≥92% of the budget: stepping up could only
+             buy a few percent more file for a barely-visible quality
+             gain, and probing it costs a whole extra encode — often
+             the slowest single thing in the run — which would then
+             usually come back over and be thrown away. Keep this fit. */
+          if(blob.size>=LIMIT*0.92)break;
           if(direction===0){direction=-1; currentIdx=i-1; if(currentIdx<0)break; continue}
           if(direction===-1){currentIdx=i-1; continue}
         }else{
