@@ -897,13 +897,13 @@
      manageable and has a chance to fit — quality drops, time doesn't. */
   function effectiveBaseFps(){
     var f=parseInt(fpsSel.value)||20, len=clipLen();
-    if(len>240)f=Math.min(f,4); else if(len>120)f=Math.min(f,5); else if(len>60)f=Math.min(f,6); else if(len>45)f=Math.min(f,8); else if(len>30)f=Math.min(f,10); else if(len>15)f=Math.min(f,12);
-    /* Hard cap on captured frames. Without this a 60s clip tried to
-       capture 360–480 frames — the crawl the user sat through, and
-       enough full-size frames in memory to crash/restart the tab on
-       a phone before any Save button ever appeared. */
-    var maxFrames=180;
-    if(len*f>maxFrames)f=Math.max(3,Math.floor(maxFrames/len));
+    if(len>240)f=Math.min(f,5); else if(len>120)f=Math.min(f,6); else if(len>60)f=Math.min(f,8); else if(len>45)f=Math.min(f,10); else if(len>30)f=Math.min(f,12); else if(len>15)f=Math.min(f,12);
+    /* Hard cap on captured frames. Frames are stored as compressed
+       JPEG strings (not bitmaps), so a higher cap is safe: 600 lets
+       a 60s clip run at 10 fps and a 30s clip at 12 fps instead of
+       crushing long clips to 3 fps and throwing most frames away. */
+    var maxFrames=600;
+    if(len*f>maxFrames)f=Math.max(4,Math.floor(maxFrames/len));
     return Math.max(3,f);
   }
   function maxWidth(){return Math.min(parseInt(widthSel.value),video.videoWidth||parseInt(widthSel.value))}
@@ -1236,7 +1236,32 @@
        that didn't fire 'seeked' burned the full 900ms timeout, so
        capture crawled at ~1 frame per second on some phones. */
     if(video.readyState>=2&&Math.abs((video.currentTime||0)-t)<0.02)return Promise.resolve();
-    return new Promise(function(res){var done=false;function fin(){if(done)return;done=true;video.removeEventListener('seeked',fin);res()}video.addEventListener('seeked',fin);try{video.currentTime=t}catch(e){fin();return}setTimeout(fin,350)})
+    return new Promise(function(res){
+      var done=false;
+      function fin(){if(done)return;done=true;video.removeEventListener('seeked',onSeeked);res()}
+      /* Resolve only once the seek has actually landed: the playhead
+         must be within 0.05s of the target, and where
+         requestVideoFrameCallback exists, a fresh frame for the new
+         time must have been presented. The old version resolved on a
+         flat 350ms timer whether the seek had landed or not, so
+         drawImage kept capturing whatever stale frame was on screen
+         — duplicated frames, and whole stretches of the clip never
+         captured at all. */
+      function onSeeked(){
+        if(Math.abs((video.currentTime||0)-t)>0.05)return;
+        if(typeof video.requestVideoFrameCallback==='function'){
+          video.requestVideoFrameCallback(function(){fin()});
+          setTimeout(fin,250);
+        }else{
+          fin();
+        }
+      }
+      video.addEventListener('seeked',onSeeked);
+      try{video.currentTime=t}catch(e){fin();return}
+      /* Safety net so a seek that never lands can't hang capture —
+         but give it far longer than the old 350ms before giving up. */
+      setTimeout(fin,2000);
+    })
   }
   function waitReady(){return new Promise(function(r){if(video.readyState>=2)r();else video.addEventListener('canplay',function h(){video.removeEventListener('canplay',h);r()})})}
 
