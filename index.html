@@ -154,6 +154,23 @@
   .preset small{display:block;font-size:11px;font-weight:600;color:var(--muted);line-height:1.2}
   .preset.active{background:var(--lime);border-color:#3f6212;color:#1a2e05;box-shadow:0 2px 0 #3f6212}
   .preset.active small{color:#365314}
+  .preset .pro-tag{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.02em;background:var(--yellow);border:1px solid #a16207;color:#713f12;border-radius:999px;padding:1px 6px;margin-left:5px;vertical-align:2px}
+  .preset .pro-tag.on{background:#dcfce7;border-color:#16a34a;color:#14532d}
+  .pro-strip{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-top:12px;background:var(--yellow-bg);border:1.5px solid var(--yellow);border-radius:14px;padding:10px 12px;font-size:14px}
+  .pro-strip .btn{width:auto}
+  .sub-overlay{display:none;position:fixed;inset:0;z-index:70;background:rgba(10,12,5,.92);padding:20px;overflow:auto}
+  .sub-overlay.show{display:flex;align-items:flex-start;justify-content:center}
+  .sub-card{max-width:520px;width:100%;background:var(--card);color:var(--text);border-radius:18px;padding:22px;margin:auto 0}
+  .sub-card h3{margin:0 0 6px;font-size:21px}
+  .sub-card p{color:var(--muted);font-size:14.5px;margin:8px 0 0}
+  .sub-card p b{color:var(--text)}
+  .sub-terms{text-align:left;margin:14px 0;padding-left:20px;font-size:14.5px;line-height:1.55}
+  .sub-terms li{margin:7px 0}
+  .sub-cta{margin-top:14px}
+  .sub-alt{width:100%;margin-top:10px}
+  .sub-fine{font-size:12.5px}
+  .sub-status{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-top:12px;text-align:left}
+  .sub-status p{color:var(--text)}
   .custom-row{display:none;gap:8px;align-items:center;margin-top:10px}
   .custom-row.show{display:flex}
   .custom-row input{flex:1;border:1.5px solid var(--line);background:var(--card);color:var(--text);border-radius:10px;padding:10px 12px;font-size:15px}
@@ -393,6 +410,38 @@
   .op-finish button{font-size:17px;font-weight:800;padding:16px 12px;border-radius:16px;border:0;cursor:pointer;background:linear-gradient(135deg,#d9f99d,#65a30d);color:#1a2e05}
   .op-finish button:disabled{opacity:.45;cursor:wait}
   .op-finish button small{display:block;font-weight:600;font-size:12px;opacity:.75;margin-top:3px}
+  .op-pairs{display:grid;gap:14px}
+  .op-pairs .pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .op-pairs button{font-size:15px;font-weight:800;padding:15px 10px;border-radius:13px;border:0;cursor:pointer;background:linear-gradient(135deg,#d9f99d,#65a30d);color:#1a2e05;font-family:inherit;line-height:1.2}
+  .op-pairs button small{display:block;font-weight:600;font-size:11px;opacity:.75;margin-top:3px}
+  .op-pairs .pro-tag{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.02em;background:var(--yellow);border:1px solid #a16207;color:#713f12;border-radius:999px;padding:1px 6px;margin-left:5px;vertical-align:2px}
+  .op-pairs .pro-tag.on{background:#dcfce7;border-color:#16a34a;color:#14532d}
+  .op-sizes{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .op-sizes button{font-size:17px;font-weight:800;padding:16px 10px;border-radius:14px;border:0;cursor:pointer;background:linear-gradient(135deg,#d9f99d,#65a30d);color:#1a2e05;font-family:inherit;line-height:1.2}
+  .op-sizes button small{display:block;font-weight:600;font-size:11.5px;opacity:.75;margin-top:3px}
+  .op-sizes .pro-tag{display:inline-block;font-size:10px;font-weight:800;background:var(--yellow);border:1px solid #a16207;color:#713f12;border-radius:999px;padding:1px 6px;margin-left:5px;vertical-align:2px}
+  .op-sizes .pro-tag.on{background:#dcfce7;border-color:#16a34a;color:#14532d}
+  .step-back{width:100%;margin-top:12px}
+  #stepSize #pickerPreviewBtn{display:none}
+  .stay-note{background:#fef9c3;border:1px solid #a16207;color:#713f12;border-radius:12px;padding:10px 12px;font-size:13.5px;margin-bottom:10px}
+  .ad-panel{margin-top:14px;border:1.5px dashed var(--line);border-radius:14px;padding:12px;background:var(--card)}
+  .ad-head{font-weight:800;font-size:13px;color:var(--muted);margin-bottom:8px}
+  .ad-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .ad-card{border-radius:10px;padding:10px 12px;font-size:13px;line-height:1.35}
+  .ad-card b{display:block;font-size:14px;margin-bottom:3px}
+  .ad-lawyerup{background:#1a0505;color:#fecaca;border:1.5px solid #dc2626}
+  .ad-lawyerup b{color:#f87171;letter-spacing:.06em}
+  .ad-slot{background:var(--yellow-bg);border:1.5px solid var(--yellow);color:var(--ink)}
+  .ad-note{font-size:12px;color:var(--muted);margin:8px 0 0}
+  .info-wrap{max-width:640px;margin:0 auto;padding:18px 14px 40px}
+  .info-lede{font-size:15px;line-height:1.5}
+  .info-wrap h2{font-size:19px;margin:22px 0 8px}
+  .info-steps,.info-list{margin:0;padding-left:20px;line-height:1.55;font-size:14.5px}
+  .info-steps li,.info-list li{margin:6px 0}
+  .info-cta{width:100%;margin-top:12px}
+  #viewDashboard footer.op-foot{display:block}
+  .op-finish .pro-tag{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.02em;background:var(--yellow);border:1px solid #a16207;color:#713f12;border-radius:999px;padding:1px 6px;margin-left:5px;vertical-align:2px}
+  .op-finish .pro-tag.on{background:#dcfce7;border-color:#16a34a;color:#14532d}
   #plainLog{background:#101408;color:#d9f99d;border-radius:14px;padding:12px 14px;font-size:14px;line-height:1.55;min-height:52px;white-space:pre-wrap}
   .op-onboard{position:fixed;inset:0;background:rgba(10,14,4,.72);display:none;align-items:center;justify-content:center;z-index:200;padding:18px}
   .op-onboard.show{display:flex}
@@ -401,10 +450,46 @@
   .op-onboard li{margin-bottom:8px}
   .op-hidden-engine{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
   footer.op-foot{text-align:center;font-size:13px;opacity:.7;margin-top:6px}
+  /* One-screen dashboard pass (Dean, 22 Nov 2026): the whole working
+     dashboard fits on one phone screen — no scrolling to make a GIF. */
+  #viewDashboard .op-wrap{padding:10px 10px 84px}
+  #viewDashboard .op-head{margin-bottom:8px}
+  #viewDashboard .op-head img{width:34px;height:34px}
+  #viewDashboard .op-head h1{font-size:22px}
+  #viewDashboard .op-head p{font-size:12.5px}
+  #viewDashboard .op-card{padding:12px 14px;margin-bottom:10px}
+  #viewDashboard .op-card h2{font-size:16px;margin-top:0}
+  #viewDashboard .drop{padding:12px 10px}
+  #viewDashboard .op-finish button{padding:10px 8px;font-size:14.5px;border-radius:13px}
+  #viewDashboard .op-finish button small{font-size:11px}
+  #viewDashboard #plainLog{min-height:38px;font-size:13px;padding:9px 11px}
+  #viewDashboard footer{display:none}
 </style>
 </head>
 <body>
-<div class="view" id="viewLanding" hidden></div>
+<div class="view" id="viewLanding">
+  <div class="info-wrap">
+    <div class="op-head">
+      <img src="icon.svg" alt="FitGif logo">
+      <div><h1>FitGif</h1><p>Any video. The perfect GIF. Never trimmed.</p></div>
+    </div>
+    <p class="info-lede">FitGif makes a GIF from your video that fits the size limit of the site you want to post it on — optimised, compressed and AI tweaked to the best quality that fits, with the whole clip kept. The length is never trimmed.</p>
+    <button type="button" class="btn btn-lime info-cta" data-go-dashboard>Make a GIF &rarr;</button>
+    <h2>How it works</h2>
+    <ol class="info-steps">
+      <li><b>Add your video</b> — one tap, from your camera roll or files.</li>
+      <li><b>Pick your size</b> — one press and it starts. Your video plays while the GIF is made.</li>
+      <li><b>Save screen.</b> You land on the finished GIF with its preview — Save it, put it in Photos, or share it. Short clips are used whole. For longer videos, about a minute of video fits per 10 MB — slide the window over the filmstrip to pick the part you want, and that part is kept whole.</li>
+    </ol>
+    <h2>Free &amp; FitGif Pro</h2>
+    <ul class="info-list">
+      <li><b>Free to use</b> — no sign-up. Ads show while a free GIF is being made.</li>
+      <li><b>The 25 MB and 50 MB sizes are Pro-only.</b></li>
+      <li><b>FitGif Pro:</b> 7-day free trial, then A$4.99/month via PayPal. Pro is <b>ad-free</b> and unlocks <b>every size</b>. Cancel any time in the app — no phone call, no email.</li>
+    </ul>
+    <button type="button" class="btn btn-lime info-cta" data-go-dashboard>Make a GIF &rarr;</button>
+  </div>
+</div>
 <div class="view active" id="viewDashboard">
   <div class="op-wrap">
     <div class="op-head">
@@ -412,6 +497,22 @@
       <div><h1>FitGif</h1><p>Any video. The perfect GIF. Never trimmed.</p></div>
     </div>
 
+
+    <div class="fstep" id="stepUpload">
+    <section class="op-card">
+      <h2>1. Add your video</h2>
+      <div class="drop" id="drop">
+        <div style="font-size:38px">🎞️</div>
+        <strong>Drag &amp; drop your video here</strong>
+        <span>or</span><br><br>
+        <label class="btn btn-primary" for="fileInput" style="cursor:pointer">Choose video file</label>
+        <input id="fileInput" type="file" accept="video/*" hidden>
+        <div style="margin-top:12px"><span>MP4, WebM, MOV &bull; Short clips are used whole &mdash; longer videos use the picker above</span></div>
+      </div>
+    </section>
+    </div>
+
+    <div class="fstep" id="stepSize" style="display:none">
     <section class="long-picker" id="longPicker" aria-label="Pick your clip from a long video">
       <span class="lp-badge" id="lpBadge">Long video detected</span>
       <h2 id="lpHeading">Pick your minute</h2>
@@ -443,17 +544,32 @@
         <button type="button" class="btn btn-primary btn-sm" id="pickerPreviewBtn">▶ Preview this clip</button>
       </div>
     </section>
-
     <section class="op-card">
-      <h2>1. Add your video</h2>
-      <div class="drop" id="drop">
-        <div style="font-size:38px">🎞️</div>
-        <strong>Drag &amp; drop your video here</strong>
-        <span>or</span><br><br>
-        <label class="btn btn-primary" for="fileInput" style="cursor:pointer">Choose video file</label>
-        <input id="fileInput" type="file" accept="video/*" hidden>
-        <div style="margin-top:12px"><span>MP4, WebM, MOV &bull; Short clips are used whole &mdash; longer videos use the picker above</span></div>
+      <h2>2. Pick your size</h2>
+      <div class="op-sizes">
+        <button type="button" data-size-mb="5">5 MB<small>For X on phones &middot; up to 0:30</small></button>
+        <button type="button" data-size-mb="10">10 MB<small>Main site &middot; up to 1:00</small></button>
+        <button type="button" data-size-mb="15">15 MB<small>For X on the web &middot; up to 1:30</small></button>
+        <button type="button" data-size-mb="20">20 MB<small>For Discord &middot; up to 2:00</small></button>
+        <button type="button" data-size-mb="25">25 MB<span class="pro-tag" data-pro-tag>🔒 Pro</span><small>Up to 2:30</small></button>
+        <button type="button" data-size-mb="50">50 MB<span class="pro-tag" data-pro-tag>🔒 Pro</span><small>Up to 5:00</small></button>
       </div>
+      <div class="op-hidden-engine" aria-hidden="true">
+        <input type="hidden" id="limitSel" value="10">
+        <div class="custom-row" id="customRow"><input type="number" id="customMB" min="1" max="100" step="0.5" value="12"></div>
+        <input type="hidden" id="widthSel" value="720">
+        <input type="hidden" id="fpsSel" value="20">
+      </div>
+      <p class="note" style="display:none"><b id="limitLengthLabel">1:00</b> <b id="limitBytesLabel">10,485,760 bytes</b></p>
+      <div class="estimate" id="estimate">Add a video to see the starting point.</div>
+      <div class="pro-strip" id="proStrip"><span id="proStripText">⭐ <b>FitGif Pro:</b> no ads, every size. Free sizes show ads; 25 MB and 50 MB are Pro-only.</span><button type="button" class="btn btn-lime btn-sm" id="proStripBtn">Start 7-day free trial</button></div>
+      <button type="button" class="btn btn-ghost step-back" id="backToUploadBtn">&larr; Different video</button>
+      <button class="btn btn-lime" id="createBtn" disabled style="display:none">✦ Create best GIF under <span data-limit-label>10 MB</span></button>
+    </section>
+    </div>
+
+    <div class="fstep" id="stepProcess" style="display:none">
+      <div class="stay-note">⚠️ <b>Stay on this page</b> while your GIF is being made — if you leave or close it, the GIF stops and you&rsquo;ll have to start again.</div>
       <div class="video-wrap" id="videoWrap">
         <video id="video" controls playsinline muted></video>
         <div class="meta">
@@ -464,42 +580,6 @@
           <button class="btn btn-ghost btn-sm" id="replaceBtn">↺ Replace video</button>
         </div>
       </div>
-    </section>
-
-    <section class="op-card">
-      <h2>2. Pick your size</h2>
-      <div class="preset-row op-sizes" role="group" aria-label="Size by platform">
-        <button type="button" class="preset" data-limit-preset="5">5 MB<small>X &middot; mobile &middot; up to 0:30</small></button>
-        <button type="button" class="preset" data-limit-preset="15">15 MB<small>X &middot; web &middot; up to 1:30</small></button>
-        <button type="button" class="preset" data-limit-preset="20">20 MB<small>Discord &middot; up to 2:00</small></button>
-        <button type="button" class="preset active" data-limit-preset="10">10 MB<small>Main site &middot; up to 1:00</small></button>
-        <button type="button" class="preset" data-limit-preset="25">25 MB<small>Large &middot; up to 2:30</small></button>
-        <button type="button" class="preset" data-limit-preset="50">50 MB<small>Extra large &middot; up to 5:00</small></button>
-      </div>
-      <div class="op-hidden-engine" aria-hidden="true">
-        <input type="hidden" id="limitSel" value="10">
-        <div class="custom-row" id="customRow"><input type="number" id="customMB" min="1" max="100" step="0.5" value="12"></div>
-        <input type="hidden" id="widthSel" value="720">
-        <input type="hidden" id="fpsSel" value="20">
-      </div>
-      <p class="note" style="margin-top:10px">Max clip length at this size: <b id="limitLengthLabel">1:00</b> &mdash; about 1 minute per 10 MB. Hard limit: <b id="limitBytesLabel">10,485,760 bytes</b> &mdash; only a GIF under <span data-limit-label>10 MB</span> is ever kept. Width and frame rate are automatic.</p>
-      <div class="estimate" id="estimate">Add a video to see the starting point.</div>
-    </section>
-
-    <section class="op-card">
-      <h2>3. One press &mdash; processed and finished</h2>
-      <div class="op-finish">
-        <button type="button" data-finish="save">💾 Process &amp; Save<small>Makes your GIF and downloads it</small></button>
-        <button type="button" data-finish="x">𝕏 Process &amp; Post to X<small>Sized for X, ready to share</small></button>
-        <button type="button" data-finish="instagram">📷 Process &amp; Post to Instagram<small>Makes it, then opens sharing</small></button>
-        <button type="button" data-finish="discord">🎮 Process &amp; Send to Discord<small>20 MB Discord size, ready to share</small></button>
-        <button type="button" data-finish="photos">📸 Process &amp; Save to Photos<small>Backup in Downloads, then Photos</small></button>
-        <button type="button" data-finish="reddit">👽 Process &amp; Post to Reddit<small>Makes it, then opens sharing</small></button>
-      </div>
-      <button class="btn btn-lime" id="createBtn" disabled style="display:none">✦ Create best GIF under <span data-limit-label>10 MB</span></button>
-      <button class="btn btn-ghost" id="cancelBtn" style="width:100%;margin-top:10px;display:none">Cancel</button>
-    </section>
-
     <section class="op-card">
       <h2>What&rsquo;s happening</h2>
       <div id="plainLog" aria-live="polite">Add a video, pick a size, then press one button &mdash; I&rsquo;ll walk you through it here as it happens.</div>
@@ -507,12 +587,17 @@
       <p class="status" id="status">Ready when you are. Choose a video to start.</p>
       <p class="lib-status" id="libStatus" role="status">GIF library: loading in the background&hellip;</p>
       <button type="button" class="btn btn-ghost" id="libRetryBtn">↺ Retry loading GIF library</button>
-      <details class="log-details" id="logDetails">
-        <summary>Detailed optimiser log</summary>
-        <div class="log" id="log" aria-live="polite"></div>
-      </details>
+      <div class="log" id="log" hidden aria-hidden="true"></div>
     </section>
-
+      <div class="ad-panel" id="adPanel" hidden>
+        <div class="ad-head">While your GIF is being made&hellip;</div>
+        <div class="ad-grid">
+          <div class="ad-card ad-lawyerup"><b>LAWYER UP</b><span>Pulled over? One red button connects you live to a lawyer. $30 &mdash; no subscription.</span></div>
+          <div class="ad-card ad-slot"><b>Your ad here</b><span>This spot reaches every FitGif user while their GIF is made.</span></div>
+        </div>
+        <p class="ad-note">Ads show while your GIF is made. FitGif Pro is ad-free &mdash; and unlocks every size.</p>
+      </div>
+      <button class="btn btn-ghost" id="cancelBtn" style="width:100%;margin-top:10px;display:none">Cancel</button>
     <section class="op-card">
       <div class="result" id="result">
           <h2 style="margin-top:4px">Your best GIF is ready ✅</h2>
@@ -535,6 +620,7 @@
         </div>
       
     </section>
+    </div>
 
     <div class="save-bar" id="saveBar">
       <div class="save-progress" id="saveProg" role="progressbar" aria-label="GIF creation progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
@@ -548,7 +634,7 @@
       </div>
     </div>
     <footer>Max length follows your size — about 1 minute per 10 MB • Short clips used whole • Longer video? Pick your window with the scrub bar at the top • <button type="button" class="btn btn-ghost btn-sm" data-go-landing style="min-height:32px;padding:4px 10px">← Back to info &amp; how it works</button>
-    <footer class="op-foot">FitGif &bull; Works entirely in your browser &bull; Your whole clip is kept &mdash; the length is never trimmed</footer>
+    <footer class="op-foot">FitGif &bull; Works entirely in your browser &bull; Your whole clip is kept &mdash; the length is never trimmed &bull; <button type="button" class="btn btn-ghost btn-sm" data-go-landing style="min-height:32px;padding:4px 10px">How it works &amp; pricing</button></footer>
   </div>
 </div>
 
@@ -585,6 +671,49 @@
       <li><b>Your whole clip is kept.</b> FitGif squeezes the file smaller &mdash; it never trims the length.</li>
     </ul>
     <button type="button" class="btn btn-primary" id="onboardBtn" style="width:100%">Got it &mdash; let&rsquo;s go</button>
+  </div>
+</div>
+
+<div class="sub-overlay" id="subOverlay" role="dialog" aria-modal="true" aria-label="FitGif Pro subscription">
+  <div class="sub-card">
+    <div id="subPaywallView">
+      <h3>⭐ FitGif Pro</h3>
+      <p>Making GIFs is <b>free</b> at the 5, 10, 15 and 20 MB sizes — with ads while your GIF is made. The <b>25 MB and 50 MB sizes are FitGif Pro</b>, and Pro is <b>ad-free at every size</b>. Here is exactly how Pro works, before you sign up:</p>
+      <ul class="sub-terms">
+        <li><b>7-day free trial.</b> It starts today, <span id="subTrialToday"></span>, and Pro switches on straight away.</li>
+        <li><b>First payment: A$4.99 on <span id="subFirstCharge"></span></b> — the day your trial ends. We&rsquo;ll remind you before it converts.</li>
+        <li><b>Then A$4.99 per month</b>, charged monthly via PayPal. It is a subscription and it auto-renews each month until you cancel.</li>
+        <li><b>Cancel any time, online, right here in the app</b> — a couple of taps under Manage subscription. No phone call, no email, no hoops.</li>
+        <li><b>Ad-free, every size.</b> Paying removes the ads that show while a GIF is being made — and every size is included.</li>
+        <li>If you cancel, Pro keeps working until the end of your trial or paid period.</li>
+      </ul>
+      <button type="button" class="btn btn-lime sub-cta" id="subStartBtn">Start my 7-day free trial with PayPal</button>
+      <button type="button" class="btn btn-ghost sub-alt" id="subPaywallManageBtn">Manage subscription</button>
+      <button type="button" class="btn btn-ghost sub-alt" id="subCloseBtn">Not now</button>
+      <p class="sub-fine">FitGif Pro is a subscription: free for 7 days, then A$4.99/month via PayPal, renewing monthly until cancelled. Prices in AUD.</p>
+    </div>
+    <div id="subDoneView" style="display:none">
+      <h3>✅ You&rsquo;re in — FitGif Pro is on</h3>
+      <p id="subDoneText"></p>
+      <button type="button" class="btn btn-lime sub-cta" id="subDoneBtn">Start using Pro</button>
+      <button type="button" class="btn btn-ghost sub-alt" id="subDoneManageBtn">Manage subscription</button>
+    </div>
+    <div id="subManageView" style="display:none">
+      <h3>Manage subscription</h3>
+      <div class="sub-status">
+        <p id="subStatusText" style="margin:0"></p>
+        <p id="subNextText"></p>
+      </div>
+      <div id="subCancelZone">
+        <button type="button" class="btn btn-ghost sub-alt" id="subCancelBtn">Cancel subscription</button>
+        <div id="subCancelConfirm" style="display:none">
+          <p><b>Cancel FitGif Pro?</b> No more payments will be taken, and Pro keeps working until <b id="subCancelUntil"></b>. After that, making GIFs needs an active subscription again.</p>
+          <button type="button" class="btn btn-lime sub-cta" id="subCancelYes">Yes — cancel my subscription</button>
+          <button type="button" class="btn btn-ghost sub-alt" id="subCancelNo">Keep Pro</button>
+        </div>
+      </div>
+      <button type="button" class="btn btn-ghost sub-alt" id="subManageCloseBtn">Close</button>
+    </div>
   </div>
 </div>
 
@@ -625,18 +754,186 @@
      app — and its Save button — had vanished.) */
   showView('dashboard');
 
-  /* --- Plans: free trial (default) vs FitGif Pro ---
-     Trial state is in-memory only for this visit. There is no payment
-     wired up yet, so Subscribe never charges — it explains that
-     subscriptions are coming soon. Pro is therefore not activated here. */
+  /* --- FitGif Pro subscription ---
+     Free with ads up to 20 MB; 25 MB and 50 MB are Pro-only. Pro (trial or paid) is ad-free at every size.
+     Pro sizes: 15 MB and up (the 15/20/25/50 presets and any custom size
+     of 15 MB or more) are locked behind FitGif Pro: A$4.99/month via
+     PayPal with a 7-day free trial. The price, the trial, the first
+     charge date, the monthly renewal and the online cancellation are
+     all shown on the paywall BEFORE sign-up — no sneaky-trial framing.
+
+     PAYMENT WIRING: the owner's PayPal Business account is not finished
+     yet, so live PayPal charging begins once PAYPAL_PLAN_ID below is set
+     to the live PayPal subscription plan id. While it is empty, starting
+     the trial activates Pro in the app and records the trial, first
+     charge and renewal dates locally (localStorage) so the whole flow
+     works end to end in the app; no charge is taken and no PayPal plan
+     id or client id is invented. When PAYPAL_PLAN_ID is set, the start
+     button hands off to PayPal's hosted plan checkout instead. */
+  var PAYPAL_PLAN_ID='P-8F665050FU496664MNMBL4YQ'; /* <-- the live PayPal subscription plan id goes here; live PayPal charging begins once it is set */
+  var PRO_PRICE_AUD=4.99, PRO_TRIAL_DAYS=7, PRO_LOCK_MB=15;
   var FREE_MAX_MB=100, PRO_MAX_MB=100, isPro=false;
-  document.querySelectorAll('[data-subscribe]').forEach(function(b){b.addEventListener('click',function(){
-    var view=b.closest?b.closest('.view'):null;
-    var scope=view||document;
-    var notes=scope.querySelectorAll('[data-subscribe-note]');
-    notes.forEach(function(n){n.classList.add('show')});
-    if(notes.length)notes[0].scrollIntoView({behavior:'smooth',block:'nearest'});
-  })});
+  var SUB_KEY='fitgifProSubV1';
+  var subState=null;
+  function subDefault(){return {status:'none',trialStart:'',trialEnd:'',nextCharge:'',accessUntil:''}}
+  function subLoad(){
+    if(subState)return subState;
+    try{var raw=localStorage.getItem(SUB_KEY); subState=raw?JSON.parse(raw):subDefault();}catch(e){subState=subDefault();}
+    if(!subState||typeof subState!=='object'||!subState.status)subState=subDefault();
+    return subState;
+  }
+  function subSave(){ try{localStorage.setItem(SUB_KEY,JSON.stringify(subState));}catch(e){} }
+  function subParse(s){ var d=s?new Date(s):null; return (d&&isFinite(d.getTime()))?d:null; }
+  function subFmt(d){ return d?d.toLocaleDateString('en-AU',{day:'numeric',month:'long',year:'numeric'}):''; }
+  function subAddDays(d,n){ var x=new Date(d.getTime()); x.setDate(x.getDate()+n); return x; }
+  function subAddMonth(d){ var x=new Date(d.getTime()); x.setMonth(x.getMonth()+1); return x; }
+  /* Lazy roll-forward: a trial whose end date has passed converts to a
+     paid month (charged via PayPal), and paid months roll on, so the
+     stored dates always describe the current period. A cancelled
+     subscription never rolls — access just runs out at accessUntil. */
+  function subRefresh(){
+    var st=subLoad(), now=new Date(), changed=false;
+    if(st.status==='trial'){
+      var te=subParse(st.trialEnd);
+      if(te&&now>=te){ st.status='active'; st.nextCharge=subAddMonth(te).toISOString(); st.accessUntil=st.nextCharge; changed=true; }
+    }
+    if(st.status==='active'){
+      var nc=subParse(st.nextCharge), guard=0;
+      while(nc&&now>=nc&&guard<240){ nc=subAddMonth(nc); st.nextCharge=nc.toISOString(); st.accessUntil=st.nextCharge; changed=true; guard++; }
+    }
+    if(changed)subSave();
+    return st;
+  }
+  function subAccess(){
+    var st=subRefresh(), now=new Date();
+    if(st.status==='trial'||st.status==='active')return true;
+    if(st.status==='cancelled'){ var au=subParse(st.accessUntil); return !!(au&&now<au); }
+    return false;
+  }
+  function subGateApplies(){ return getRequestedLimitMB()>20 && !subAccess(); }
+  function subRefreshUI(){
+    isPro=subAccess();
+    var st=subLoad(), now=new Date();
+    document.querySelectorAll('[data-pro-tag]').forEach(function(t){
+      if(isPro){ t.textContent='\u2B50 Pro'; t.classList.add('on'); }
+      else{ t.textContent='🔒 Pro'; t.classList.remove('on'); }
+    });
+    var txt=$('proStripText'), btn=$('proStripBtn');
+    if(!txt||!btn)return;
+    if(st.status==='trial'){
+      var te=subParse(st.trialEnd), days=te?Math.max(0,Math.ceil((te.getTime()-now.getTime())/86400000)):0;
+      txt.innerHTML='\u2B50 <b>FitGif Pro is on</b> — free trial until <b>'+subFmt(te)+'</b>'+(days<=2?' — ending soon, first charge '+subFmt(te):'')+', then A$4.99/month via PayPal.';
+      btn.textContent='Manage subscription';
+    }else if(st.status==='active'){
+      txt.innerHTML='\u2B50 <b>FitGif Pro is on</b> — renews <b>'+subFmt(subParse(st.nextCharge))+'</b>, A$4.99 via PayPal.';
+      btn.textContent='Manage subscription';
+    }else if(st.status==='cancelled'&&isPro){
+      txt.innerHTML='\u2B50 <b>FitGif Pro is on</b> until <b>'+subFmt(subParse(st.accessUntil))+'</b> — subscription cancelled, no more charges.';
+      btn.textContent='Manage subscription';
+    }else{
+      txt.innerHTML='\\u2B50 <b>FitGif Pro:</b> no ads, every size. Free sizes show ads; 25 MB and 50 MB are Pro-only.';
+      btn.textContent='Start 7-day free trial';
+    }
+  }
+  function subShowView(name){
+    ['subPaywallView','subDoneView','subManageView'].forEach(function(id){
+      var el=$(id); if(el)el.style.display=(id===name)?'':'none';
+    });
+  }
+  function subOpenPaywall(){
+    var ov=$('subOverlay'); if(!ov)return;
+    var today=new Date(), first=subAddDays(today,PRO_TRIAL_DAYS);
+    var t=$('subTrialToday'); if(t)t.textContent=subFmt(today);
+    var f=$('subFirstCharge'); if(f)f.textContent=subFmt(first);
+    subShowView('subPaywallView');
+    ov.classList.add('show'); ov.scrollTop=0;
+  }
+  function subOpenManage(){
+    var ov=$('subOverlay'); if(!ov)return;
+    subFillManage(); subShowView('subManageView');
+    ov.classList.add('show'); ov.scrollTop=0;
+  }
+  function subClose(){ var ov=$('subOverlay'); if(ov)ov.classList.remove('show'); }
+  function subFillManage(){
+    var st=subRefresh();
+    var sEl=$('subStatusText'), nEl=$('subNextText'), cz=$('subCancelZone'), cc=$('subCancelConfirm'), cb=$('subCancelBtn');
+    if(cc)cc.style.display='none';
+    if(cb)cb.style.display='';
+    if(st.status==='trial'){
+      if(sEl)sEl.innerHTML='<b>Status:</b> Free trial — FitGif Pro is on until <b>'+subFmt(subParse(st.trialEnd))+'</b>.';
+      if(nEl)nEl.innerHTML='<b>Next charge:</b> A$4.99 via PayPal on <b>'+subFmt(subParse(st.trialEnd))+'</b>, then A$4.99 monthly, auto-renewing until cancelled.';
+      if(cz)cz.style.display='';
+    }else if(st.status==='active'){
+      if(sEl)sEl.innerHTML='<b>Status:</b> FitGif Pro is on.';
+      if(nEl)nEl.innerHTML='<b>Next charge:</b> A$4.99 via PayPal on <b>'+subFmt(subParse(st.nextCharge))+'</b>, then A$4.99 monthly, auto-renewing until cancelled.';
+      if(cz)cz.style.display='';
+    }else if(st.status==='cancelled'){
+      if(sEl)sEl.innerHTML='<b>Status:</b> Cancelled — no more charges will be taken.';
+      if(nEl)nEl.innerHTML='Pro keeps working until <b>'+subFmt(subParse(st.accessUntil))+'</b>. After that, making GIFs needs an active subscription again.';
+      if(cz)cz.style.display='none';
+    }else{
+      if(sEl)sEl.innerHTML='<b>Status:</b> No subscription — free sizes with ads; the 25 MB and 50 MB sizes are Pro-only.';
+      if(nEl)nEl.innerHTML='Start a 7-day free trial to unlock every size, ad-free.';
+      if(cz)cz.style.display='none';
+    }
+  }
+  function subStartTrial(){
+    if(PAYPAL_PLAN_ID){
+      /* A live PayPal plan is configured: hand off to PayPal's hosted
+         subscription checkout for this plan. The charge itself happens
+         at PayPal, via PayPal. */
+      window.location.href='https://www.paypal.com/webapps/billing/plans/subscribe?plan_id='+encodeURIComponent(PAYPAL_PLAN_ID);
+      return;
+    }
+    var now=new Date(), end=subAddDays(now,PRO_TRIAL_DAYS);
+    subState={status:'trial',trialStart:now.toISOString(),trialEnd:end.toISOString(),nextCharge:end.toISOString(),accessUntil:end.toISOString()};
+    subSave(); subRefreshUI();
+    var ct=$('subDoneText');
+    if(ct)ct.innerHTML='Your 7-day free trial has started — Pro is on right now, including the size you picked. Your first payment of <b>A$4.99</b> is due on <b>'+subFmt(end)+'</b> and is taken via <b>PayPal</b>, then A$4.99 monthly until you cancel. We will remind you before the trial converts, and you can cancel any time under Manage subscription — online, a couple of taps, no phone call or email needed.';
+    subShowView('subDoneView');
+    setStatus('FitGif Pro is on — free trial until '+subFmt(end)+', then A$4.99/month via PayPal.');
+  }
+  function subCancel(){
+    var st=subRefresh();
+    if(st.status==='trial')st.accessUntil=st.trialEnd;
+    else if(st.status==='active')st.accessUntil=st.nextCharge;
+    st.status='cancelled';
+    subSave(); subRefreshUI(); subFillManage();
+    setStatus('Subscription cancelled — Pro keeps working until '+subFmt(subParse(st.accessUntil))+', and no more charges will be taken.');
+  }
+  /* --- Pro wiring: strip button, paywall buttons, and the size gates --- */
+  var proStripBtnEl=$('proStripBtn');
+  if(proStripBtnEl)proStripBtnEl.addEventListener('click',function(){ if(subAccess())subOpenManage(); else subOpenPaywall(); });
+  var subStartBtnEl=$('subStartBtn'); if(subStartBtnEl)subStartBtnEl.addEventListener('click',subStartTrial);
+  var subCloseBtnEl=$('subCloseBtn'); if(subCloseBtnEl)subCloseBtnEl.addEventListener('click',subClose);
+  var subDoneBtnEl=$('subDoneBtn'); if(subDoneBtnEl)subDoneBtnEl.addEventListener('click',subClose);
+  var subPwManageEl=$('subPaywallManageBtn'); if(subPwManageEl)subPwManageEl.addEventListener('click',subOpenManage);
+  var subDoneManageEl=$('subDoneManageBtn'); if(subDoneManageEl)subDoneManageEl.addEventListener('click',subOpenManage);
+  var subManageCloseEl=$('subManageCloseBtn'); if(subManageCloseEl)subManageCloseEl.addEventListener('click',subClose);
+  var subCancelBtnEl=$('subCancelBtn');
+  if(subCancelBtnEl)subCancelBtnEl.addEventListener('click',function(){
+    var st=subRefresh(), until=(st.status==='trial')?st.trialEnd:st.nextCharge;
+    var u=$('subCancelUntil'); if(u)u.textContent=subFmt(subParse(until));
+    var cc=$('subCancelConfirm'); if(cc)cc.style.display='';
+    subCancelBtnEl.style.display='none';
+  });
+  var subCancelYesEl=$('subCancelYes'); if(subCancelYesEl)subCancelYesEl.addEventListener('click',subCancel);
+  var subCancelNoEl=$('subCancelNo'); if(subCancelNoEl)subCancelNoEl.addEventListener('click',function(){ subFillManage(); });
+  var subOverlayEl=$('subOverlay');
+  if(subOverlayEl)subOverlayEl.addEventListener('click',function(e){ if(e.target===subOverlayEl)subClose(); });
+  /* Picking a locked size (preset or custom) shows the paywall. */
+  document.querySelectorAll('[data-limit-preset]').forEach(function(b){
+    b.addEventListener('click',function(){
+      if(parseFloat(b.getAttribute('data-limit-preset'))>=PRO_LOCK_MB && !subAccess())subOpenPaywall();
+    });
+  });
+  customMB.addEventListener('change',function(){ if(subGateApplies())subOpenPaywall(); });
+  /* Belt and braces: a Create click (the Process & Post buttons end up
+     here) never starts processing on a locked size without Pro. */
+  document.addEventListener('click',function(e){
+    if(e.target===createBtn && subGateApplies()){ e.preventDefault(); e.stopPropagation(); subOpenPaywall(); }
+  },true);
+  subRefreshUI();
 
   function getRequestedLimitMB(){
     if(limitSel.value==='custom'){
@@ -871,7 +1168,7 @@
     clipStart=s;clipEnd=s+len;
     var pr=$('pickerRange'); if(pr)pr.max=Math.max(0,duration-len);
   }
-  function log(m){logEl.classList.add('show');var d=$('logDetails');if(d)d.open=true;logEl.textContent+=m+'\n';logEl.scrollTop=logEl.scrollHeight}
+  function log(m){/* Detailed per-frame log removed — the plain What's happening log above is the only log shown. */}
   function setStatus(t,err){statusEl.textContent=t;statusEl.className='status'+(err?' err':'');if(busy&&t){var lb=$('saveProgLabel');if(lb)lb.textContent=t}}
   function hideSaveProgress(){var sp=$('saveProg');if(sp){sp.classList.remove('show','is-done');sp.setAttribute('aria-valuenow','0');var f=$('saveProgFill');if(f)f.style.width='0%';var pc=$('saveProgPct');if(pc)pc.textContent='0%'}}
   function setProgress(p){
@@ -1164,9 +1461,9 @@
     $('mName').textContent=file.name.length>28?file.name.slice(0,25)+'…':file.name;
     $('mSize').textContent=fmtMB(file.size);
     drop.style.display='none';videoWrap.classList.add('show');result.classList.remove('show');logEl.textContent='';logEl.classList.remove('show');
-    setStatus('Video loaded. Pick your size (10 MB = up to 1:00 is the default), then create. Short clips are used whole; longer ones use the scrub bar at the top.');
+    setStatus('Video loaded — now pick your size.');
     createBtn.disabled=false;
-    resultBlob=null;savedYet=false;photosBackupDone=false;setSaveWaiting('Video loaded — tap Create, and Save lights up here as soon as your GIF is ready.');
+    resultBlob=null;savedYet=false;photosBackupDone=false;setSaveWaiting('Video loaded — pick a size, and Save lights up here as soon as your GIF is ready.');
   }
   video.addEventListener('loadedmetadata',function(){
     duration=video.duration||0;$('mDur').textContent=(duration>60?fmtClock(duration):fmtTime(duration));$('mRes').textContent=video.videoWidth+'×'+video.videoHeight;
@@ -1656,17 +1953,33 @@
       say('Your GIF is in your Downloads — ' + dest + ' is open in a new tab, just attach the GIF there to post it.');
     }
   }
-  function finish(dest){
-    var size=$('resultSize')?$('resultSize').textContent:'';
-    var q=$('qScore')?$('qScore').textContent:'—';
-    say('Done! Your GIF is ' + size + ' — under your limit, whole clip kept, quality kept ' + q + '.');
-    if(dest==='save'){ var ok=downloadNow(); say(ok?'Your GIF is downloading — it saves to your Downloads folder. If it does not appear, tap Save GIF on the bar at the bottom.':'Tap Save GIF on the bar at the bottom to save it to Downloads.'); }
-    else if(dest==='photos'){ var pb=$('photosBarBtn'); if(pb && !pb.disabled){ pb.click(); say('Save to Photos screen is open — the backup copy is already in Downloads.'); } else { var p=$('photosBtn'); if(p) p.click(); } }
-    else if(dest==='x'){ shareTo('X'); }
-    else if(dest==='instagram'){ shareTo('Instagram'); }
-    else if(dest==='discord'){ shareTo('Discord'); }
-    else if(dest==='reddit'){ shareTo('Reddit'); }
+  function showAds(){ var p=$('adPanel'); if(p)p.hidden=false; }
+  function hideAds(){ var p=$('adPanel'); if(p)p.hidden=true; }
+  async function shareGeneric(){
+    var url=$('downloadBtn').href;
+    try{
+      var blob=await (await fetch(url)).blob();
+      var file=new File([blob],'fitgif.gif',{type:'image/gif'});
+      if(navigator.canShare && navigator.canShare({files:[file]})){
+        await navigator.share({files:[file], title:'My FitGif GIF'});
+        say('Sharing opened — pick where to send your GIF.');
+        return;
+      }
+      throw new Error('no-share');
+    }catch(e){
+      downloadNow();
+      say('Your GIF is in your Downloads — open the site or app you want and attach it there.');
+    }
   }
+  function finish(dest){
+    hideAds();
+    var size=$('resultSize')?$('resultSize').textContent:'';
+    var q=$('qScore')?$('qScore').textContent:'\u2014';
+    say('Done! Your GIF is ' + size + ' \u2014 under your limit, whole clip kept, quality kept ' + q + '.');
+    say('The preview is on this screen \u2014 Save it, put it in Photos, or share it from here.');
+  }
+
+  window.addEventListener('beforeunload',function(e){ if(watching){ e.preventDefault(); e.returnValue=''; } });
   function watchForFinish(dest){
     if(watching) return; watching=true;
     var started=Date.now(), lastStage='';
@@ -1680,33 +1993,45 @@
       }
       if(resultReady()){
         clearInterval(iv); watching=false;
-        var d=dest; pendingFinish=null; finish(d);
+        var d=dest; pendingFinish=null; hideAds(); finish(d);
       }
-      if(Date.now()-started>10*60*1000){ clearInterval(iv); watching=false; say('That took too long and no GIF was kept — try a bigger size and press again.'); }
+      if(Date.now()-started>10*60*1000){ clearInterval(iv); watching=false; hideAds(); say('That took too long and no GIF was kept — try a bigger size and press again.'); }
     },600);
   }
-  document.querySelectorAll('[data-finish]').forEach(function(btn){
+  function showStep(n){
+    var map={1:'stepUpload',2:'stepSize',3:'stepProcess'};
+    [1,2,3].forEach(function(i){ var el=$(map[i]); if(el)el.style.display=(i===n)?'':'none'; });
+    window.scrollTo({top:0,behavior:'instant'});
+  }
+  document.querySelectorAll('[data-size-mb]').forEach(function(btn){
     btn.addEventListener('click',function(){
-      var dest=btn.getAttribute('data-finish');
+      var mb=parseFloat(btn.getAttribute('data-size-mb'));
       var create=$('createBtn');
       if(!create || create.disabled){
-        resetLog(); say('Add a video first — then this button does everything in one press.');
-        var fi=$('fileInput'); if(fi) fi.scrollIntoView({behavior:'smooth',block:'center'});
+        resetLog(); say('Add a video first \u2014 then pick your size.');
+        showStep(1);
         return;
       }
-      if(dest==='discord' && currentLimitMB()>20){ setLimit(20); say('Discord caps GIFs at 20 MB, so I switched your size to 20 MB for this one.'); }
-      if(dest==='x'){
-        var mobile=/Android|iPhone|iPad|Mobile/i.test(navigator.userAgent);
-        setLimit(mobile?5:15);
-        say(mobile?'X on mobile caps GIFs at 5 MB, so I switched your size to 5 MB for this one.':'X on web takes up to 15 MB, so I switched your size to 15 MB for this one.');
-      }
+      setLimit(mb);
+      if(subGateApplies()){ subOpenPaywall(); return; }
       resetLog();
-      say('Got it — making your GIF now, best quality under ' + currentLimitMB() + ' MB, whole clip kept…');
-      pendingFinish=dest;
+      say('Got it \u2014 making your '+mb+' MB GIF now. Your video plays while it works\u2026');
+      showStep(3);
+      if(!subAccess()){ showAds(); }
+      var v=$('video'); if(v){ try{ v.muted=true; var pr=v.play(); if(pr&&pr.catch)pr.catch(function(){}); }catch(e){} }
+      pendingFinish='done';
       create.click();
-      watchForFinish(dest);
+      watchForFinish('done');
     });
   });
+  var backBtn=$('backToUploadBtn'); if(backBtn)backBtn.addEventListener('click',function(){ showStep(1); });
+  var againB=$('againBtn'); if(againB)againB.addEventListener('click',function(){ showStep(2); });
+  var statusEl=$('status');
+  if(statusEl&&window.MutationObserver){
+    new MutationObserver(function(){
+      if(/^Video loaded/.test(statusEl.textContent||'')) showStep(2);
+    }).observe(statusEl,{childList:true,characterData:true,subtree:true});
+  }
 })();
 </script>
 
