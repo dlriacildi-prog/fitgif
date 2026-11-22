@@ -423,6 +423,13 @@
   .op-sizes .pro-tag.on{background:#dcfce7;border-color:#16a34a;color:#14532d}
   .step-back{width:100%;margin-top:12px}
   #stepSize #pickerPreviewBtn{display:none}
+  /* Teleprompter strip: capped at about two lines, never a full screen. */
+  #plainLog.tele-strip{max-height:3.4em;overflow:hidden;margin:10px 0 2px}
+  /* First page fills the whole screen (big D, 22 Nov 2026): the upload
+     step stretches to full height instead of sitting at the top. */
+  #stepUpload{display:flex;flex-direction:column;min-height:calc(100dvh - 150px)}
+  #stepUpload .op-card{flex:1;display:flex;flex-direction:column}
+  #stepUpload .drop{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
   .stay-note{background:#fef9c3;border:1px solid #a16207;color:#713f12;border-radius:12px;padding:10px 12px;font-size:13.5px;margin-bottom:10px}
   .ad-panel{margin-top:14px;border:1.5px dashed var(--line);border-radius:14px;padding:12px;background:var(--card)}
   .ad-head{font-weight:800;font-size:13px;color:var(--muted);margin-bottom:8px}
@@ -578,13 +585,15 @@
           <button class="btn btn-ghost btn-sm" id="replaceBtn">↺ Replace video</button>
         </div>
       </div>
-    <!-- Hidden at big D's direction (22 Nov 2026): no running commentary
-         on the processing screen — just the progress bar on the pinned
-         save bar at the bottom. The elements stay in the DOM because the
-         scripts write to them; they are simply never shown. -->
+      <!-- Teleprompter strip (big D, 22 Nov 2026): one short line at a
+           time, updated in place — never a scrolling wall of text. -->
+      <div id="plainLog" class="tele-strip" aria-live="polite">Making your GIF&hellip;</div>
+    <!-- Hidden at big D's direction (22 Nov 2026): the detailed status
+         machinery stays in the DOM because the scripts write to it, but
+         it is never shown — the teleprompter strip above and the
+         progress bar on the pinned save bar are all the user sees. -->
     <section class="op-card" style="display:none" aria-hidden="true">
       <h2>What&rsquo;s happening</h2>
-      <div id="plainLog" aria-live="polite">Add a video, pick a size, then press one button &mdash; I&rsquo;ll walk you through it here as it happens.</div>
       <div class="bar" id="progBar" style="margin-top:12px"><i id="progFill"></i></div>
       <p class="status" id="status">Ready when you are. Choose a video to start.</p>
       <p class="lib-status" id="libStatus" role="status">GIF library: loading in the background&hellip;</p>
@@ -1933,7 +1942,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   }catch(e){}
 
   var plain=$('plainLog');
-  function say(m){ plain.textContent += (plain.textContent?'\n':'') + m; }
+  function say(m){ plain.textContent = m; }
   function resetLog(){ plain.textContent=''; }
   var pendingFinish=null, watching=false;
 
