@@ -1904,6 +1904,13 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   /* Final guard on load: restore the dashboard after a restart if the
      hash says the user was in it; otherwise show the landing page. */
   showView('dashboard');
+  /* The step-flow script lives in its own scope and drives the size
+     buttons; it needs the subscription gate from this script. Publish
+     those three functions, or its click handler dies on the first call
+     and the size buttons silently do nothing. */
+  window.subGateApplies=subGateApplies;
+  window.subOpenPaywall=subOpenPaywall;
+  window.subAccess=subAccess;
 })();
 </script>
 
