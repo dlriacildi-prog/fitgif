@@ -561,8 +561,6 @@
         <input type="hidden" id="fpsSel" value="20">
       </div>
       <p class="note" style="display:none"><b id="limitLengthLabel">1:00</b> <b id="limitBytesLabel">10,485,760 bytes</b></p>
-      <div class="estimate" id="estimate">Add a video to see the starting point.</div>
-      <div class="pro-strip" id="proStrip"><span id="proStripText">⭐ <b>FitGif Pro:</b> no ads, every size. Free sizes show ads; 25 MB and 50 MB are Pro-only.</span><button type="button" class="btn btn-lime btn-sm" id="proStripBtn">Start 7-day free trial</button></div>
       <button type="button" class="btn btn-ghost step-back" id="backToUploadBtn">&larr; Different video</button>
       <button class="btn btn-lime" id="createBtn" disabled style="display:none">✦ Create best GIF under <span data-limit-label>10 MB</span></button>
     </section>
@@ -1439,6 +1437,7 @@
     updateEstimate();
   }
   function updateEstimate(){
+    if(!estimate)return;
     if(!videoFile){estimate.innerHTML='Target: <b>under '+limitLabel()+'</b> • Add a video and the estimator will predict the closest step to start from.<br><span style="opacity:.75">Estimator first, then up or down one notch at a time until it fits — no crawling from step 1 every time.</span>';return}
     var w=maxWidth(),fps=effectiveBaseFps(),len=clipLen(),frames=Math.round(len*fps);
     var h=video.videoWidth?Math.round(w*video.videoHeight/video.videoWidth):Math.round(w*9/16);
@@ -2012,7 +2011,7 @@
         showStep(1);
         return;
       }
-      setLimit(mb);
+      try{ setLimit(mb); }catch(e){}
       if(subGateApplies()){ subOpenPaywall(); return; }
       resetLog();
       say('Got it \u2014 making your '+mb+' MB GIF now. Your video plays while it works\u2026');
